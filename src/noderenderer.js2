@@ -1,0 +1,56 @@
+// var RT = require('../dist/raytracer.js');
+// var fs = require('fs');
+
+
+// var tracer = new RT.Tracer();
+// tracer.camera = new RT.Point(0,0,1000);
+// tracer.FOV = new RT.FOV();
+
+// tracer.world.objects.push(new RT.Sphere(0,0, -400, 200));
+
+// //var pixels = tracer.trace();
+// var w = tracer.FOV.width;
+// var h = tracer.FOV.height;
+
+// var filesize = 54 + 3 * w * h;
+
+// // var img = new Buffer(4*w*h);
+// // for (var i = 0; i < w; i++) {
+// // 	for (var j = 0; j < h; j++) {
+// // 		var x = i;
+// // 		var y = y - 1 - j;
+// // 		var r = pixels[i][j].red * 255;
+// // 		var g = pixels[i][j].green * 255;
+// // 		var b = pixels[i][j].blue * 255;
+
+// // 		if (r > 255 ) { r = 255; }
+// // 		if (g > 255 ) { g = 255; }
+// // 		if (b > 255 ) { b = 255; }
+
+// // 		img.writeInt8(r, (x+y*w)*3+2));
+// // 		img.writeInt8(g, (x+y*w)*3+1));
+// // 		img.writeInt8(b, (x+y*w)*3+0));
+// // 	}
+// // }
+
+// var header = new Buffer([
+// 	"B".charCodeAt(),
+// 	"M".charCodeAt(),
+// 	filesize,
+// 	filesize >> 8,
+// 	filesize >> 16,
+// 	filesize >> 24, 
+// 	0,0, 0,0, 54,0,0,0]);
+// var info = new Buffer([
+// 	40,0,0,0, w,w>>8,w>>16,w>>24, h,h>>8,h>>16,h>>24, 1,0, 24,0,
+// 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+// var pad = new Buffer([0,0,0]);
+
+// var stream = fs.createWriteStream('img.bmp');
+// fs.write(header, function() {
+// 	fs.write(info, function() {
+// 		for (i = 0; i < h; i++) {
+// 			fs.write()
+// 		}
+// 	});
+// });

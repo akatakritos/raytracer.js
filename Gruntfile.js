@@ -12,6 +12,9 @@ module.exports = function(grunt){
 					'src/color.js',
 					'src/sphere.js',
 					'src/point.js',
+					'src/world.js',
+					'src/fov.js',
+					'src/tracer.js',
 					'src/outro.js'
 				],
 				dest: 'dist/raytracer.js'
