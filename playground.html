@@ -8,25 +8,27 @@
 	</head>
 	<body>
 		<style type='text/css'>
-		.container { border: 1px solid black; display: inline-block; }
+			.canvas-container { border: 1px solid black; display: inline-block; }
 		</style>
-		<div class='container'>
-			<canvas id='canvas' width='640' height='480'></canvas>
+		<div class='canvas-container'>
+			<canvas id='canvas' width='576' height='432'>Sorry, it looks like your browser doesnt support the canvas elemenet.</canvas>
 		</div>
 		<div id='options'>
-			<button data-bind='click:trace'>Go</button>
-			<div id='sphere'>
+			<fieldset id='sphere'>
+			<legend>Sphere</legend>
 				x :<input type='number' data-bind='value:sphere.x' />
 				y: <input type='number' data-bind='value:sphere.y' />
 				z: <input type='number' data-bind='value:sphere.z' />
-				z: <input type='number' data-bind='value:sphere.r' />
+				c: <input type='number' data-bind='value:sphere.r' />
 				color: <input type='text' class='color' data-bind='value:sphere.c' />
-			</div>
-			<div id='light'>
+			</fieldset>
+			<fieldset id='light'>
+				<legend>Light Source</legend>
 				x :<input type='number' data-bind='value:light.x' />
 				y: <input type='number' data-bind='value:light.y' />
 				z: <input type='number' data-bind='value:light.z' />
-			</div>
+			</fieldset>
+			<button data-bind='click:trace, text:status'>Trace</button> (This might take a while)
 		</div>
 	</body>
 
@@ -44,6 +46,7 @@
 				y: ko.observable(-240),
 				z: ko.observable(0)
 			};
+			this.status = ko.observable('Trace');
 
 			this.trace = function() {
 				var opt = {
@@ -56,7 +59,12 @@
 					},
 					light: new RayTracer.Point(this.light.x(), this.light.y(), this.light.z())
 				};
-				trace( opt );
+				this.status('Tracing...');
+				var self = this;
+				setTimeout(function() {
+					trace( opt );
+					self.status('Trace');
+				},0);
 			}.bind(this);
 		}
 

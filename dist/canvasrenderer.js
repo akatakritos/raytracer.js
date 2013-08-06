@@ -11,10 +11,11 @@
 			},
 			light: new RT.Point(-320, -240, 0)
 		};
-		
+		var canvas = document.getElementById('canvas');
+
 		var tracer = new RT.Tracer();
 		tracer.camera = new RT.Point(0,0,1000);
-		tracer.FOV = new RT.FOV();
+		tracer.FOV = new RT.FOV(0-canvas.width/2, 0-canvas.height/2, canvas.width, canvas.height);
 
 		tracer.world.objects.push(new RT.Sphere(options.sphere.x, options.sphere.y, options.sphere.z, options.sphere.r, options.sphere.color));
 		tracer.world.light = options.light;
@@ -23,7 +24,7 @@
 		var w = tracer.FOV.width;
 		var h = tracer.FOV.height;
 
-		var canvas = document.getElementById('canvas');
+		
 		var context = canvas.getContext('2d');
 		var img = context.getImageData(0,0,canvas.width, canvas.height);
 		
