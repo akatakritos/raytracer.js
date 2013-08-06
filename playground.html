@@ -3,6 +3,8 @@
 	<head>
 		<script type='text/javascript' src='dist/raytracer.js'></script>
 		<script type='text/javascript' src='dist/canvasrenderer.js'></script>
+		<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js'></script>
+		<script type='text/javascript' src='dist/jscolor/jscolor.js'></script>
 	</head>
 	<body>
 		<style type='text/css'>
@@ -11,6 +13,54 @@
 		<div class='container'>
 			<canvas id='canvas' width='640' height='480'></canvas>
 		</div>
-		<button onclick='window.trace()'>Go</button>
+		<div id='options'>
+			<button data-bind='click:trace'>Go</button>
+			<div id='sphere'>
+				x :<input type='number' data-bind='value:sphere.x' />
+				y: <input type='number' data-bind='value:sphere.y' />
+				z: <input type='number' data-bind='value:sphere.z' />
+				z: <input type='number' data-bind='value:sphere.r' />
+				color: <input type='text' class='color' data-bind='value:sphere.c' />
+			</div>
+			<div id='light'>
+				x :<input type='number' data-bind='value:light.x' />
+				y: <input type='number' data-bind='value:light.y' />
+				z: <input type='number' data-bind='value:light.z' />
+			</div>
+		</div>
 	</body>
+
+	<script type='text/javascript'>
+		var Options = function() {
+			this.sphere = {
+				x: ko.observable(0),
+				y: ko.observable(0),
+				z: ko.observable(-400),
+				r: ko.observable(200),
+				c: ko.observable("FF0000")
+			};
+			this.light = {
+				x: ko.observable(-320),
+				y: ko.observable(-240),
+				z: ko.observable(0)
+			};
+
+			this.trace = function() {
+				var opt = {
+					sphere: {
+						x: this.sphere.x(),
+						y: this.sphere.y(),
+						z: this.sphere.z(),
+						r: this.sphere.r(),
+						color: RayTracer.Color.fromHexString( this.sphere.c() )
+					},
+					light: new RayTracer.Point(this.light.x(), this.light.y(), this.light.z())
+				};
+				trace( opt );
+			}.bind(this);
+		}
+
+		var model = new Options();
+		ko.applyBindings(model);
+	</script>
 </html>

@@ -33,4 +33,10 @@ Color.prototype.lambertShade = function( lightVector, normalVector, ambientCoeff
 	return this.mult( ambientCoefficient + (1 - ambientCoefficient) * shade);
 };
 
+Color.fromHexString = function( str ) {
+	var r = parseInt(str.substring(0,2),16) / 255;
+	var g = parseInt(str.substring(2,4),16) / 255;
+	var b = parseInt(str.substring(4,6),16) / 255;
+	return new Color(r,g,b);
+};
 Object.defineProperty(NS, 'Color', {enumerable: true, value: Color} );
