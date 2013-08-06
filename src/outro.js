@@ -1,0 +1,3 @@
+
+	window.PaintJS = NS;
+})(window);

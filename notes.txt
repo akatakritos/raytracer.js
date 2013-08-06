@@ -1,0 +1,44 @@
+Vector:
+	dot product
+	3D
+	intersection (property of object)
+
+Color
+	RGB
+	combine(reflect, refract)
+
+http://www.cs.unc.edu/~rademach/xroads-RT/RTarticle.html
+
+The directions of the reflected and refracted rays are given by the following formulas. For a ray with direction V, and a surface with normal N (the normal is just the direction perpendicular to the surface - pointing directly away from it), the reflected ray direction Rl is given by
+c1 = -dot_product( N, V )
+Rl = V + (2 * N * c1 )
+Note that since V, N, and Rl are vectors with x, y, and z components, the arithmetic on them is performed per-component. The refracted ray direction Rr is given by
+n1 = index of refraction of original medium
+n2 = index of refraction of new medium
+n = n1 / n2
+c2 = sqrt( 1 - n2 * (1 - c12) )
+
+Rr = (n * V) + (n * c1 - c2) * N
+
+Color trace_ray( Ray original_ray )
+{
+	Color point_color, reflect_color, refract_color
+	Object obj 
+
+	obj = get_first_intersection( original_ray )
+	point_color = get_point_color( obj )
+
+	if ( object is reflective )
+	reflect_color = trace_ray( get_reflected_ray( original_ray, obj ) )
+	if ( object is refractive )
+	refract_color = trace_ray( get_refracted_ray( original_ray, obj ) )
+
+	return ( combine_colors( point_color, reflect_color, refract_color ))
+}
+
+In case the result of the dot product is zero or below zero, we still may not want that part of the object to be pitch-black. After all, even when an object is completely blocked from a light source, there is still light bouncing around that illuminates it to some extent. For this reason we add a little bit of ambient light to every object, which means that the minimum amount of light that an object can receive is actually above zero. If we set the ambient coefficient to 20%, say, then even in total shadow an object will receive 20% illumination, and will thus be somewhat visible. If 20% illumination is always present, then the remaining 80% is determined by cosine shading. The value 80% in this case is known as the diffuse coefficient, which is just (1 - ambient coefficient). The final color computation is then: 
+shade = dot_product( light_vector, normal_vector )
+if ( shade < 0 )
+shade = 0
+point_color = object_color * ( ambient_coefficient + 
+diffuse_coefficient * shade )
