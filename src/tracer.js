@@ -34,8 +34,8 @@ Tracer.prototype.traceRay = function( ray ) {
 };
 
 Tracer.prototype.calculatePointColor = function( intersection ) {
-	var lightVector = Vector.distanceVector(this.camera, intersection.point);
-	var normalVector = intersection.object.normalVector( intersection.point );
+	var lightVector = Vector.distanceVector(this.world.light, intersection.point).normalize();
+	var normalVector = intersection.object.normalVector( intersection.point ).normalize();
 	return intersection.object.color.lambertShade(lightVector, normalVector, this.world.ambientCoefficient);
 };
 

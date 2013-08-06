@@ -3,12 +3,12 @@ var FOV = function(x,y,width,height) {
 		x = arguments[0].x || -320;
 		y = arguments[0].y || -240;
 		width = arguments[0].width || 640;
-		height = arguments[0].height || 640;
+		height = arguments[0].height || 480;
 	} else {
 		x = x || -320;
 		y = y || -240;
 		width = width || 640;
-		height = height || 640;
+		height = height || 480;
 	}
 
 	Object.defineProperty(this, 'x', {enumerable: true, value: x});

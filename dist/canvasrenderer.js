@@ -8,8 +8,6 @@
 		tracer.world.objects.push(new RT.Sphere(0,0, -400, 200));
 
 		var pixels = tracer.trace();
-		console.log(pixels);
-		console.log(tracer);
 		var w = tracer.FOV.width;
 		var h = tracer.FOV.height;
 
@@ -17,15 +15,15 @@
 		var context = canvas.getContext('2d');
 		var img = context.getImageData(0,0,canvas.width, canvas.height);
 		
-		for( var i = 0; i < w; i++) {
-			for (var j = 0; j < h; j++ ) {
-				var idx = i*h+j
-				// if( pixels[i][j].r > 0) {
+		for( var y = 0; y < h; y++) {
+			for (var x = 0; x < w; x++ ) {
+				var idx = ((w*y)+x)*4;
+				// if( pixels[x][y].r > 0) {
 				// 	debugger;
 				// }
-				img.data[idx] = pixels[i][j].r*255;
-				img.data[idx+1] = pixels[i][j].g*255;
-				img.data[idx+2] = pixels[i][j].b*255;
+				img.data[idx]   = pixels[x][y].r*255;
+				img.data[idx+1] = pixels[x][y].g*255;
+				img.data[idx+2] = pixels[x][y].b*255;
 				img.data[idx+3] = 255;
 			}
 		}

@@ -4,6 +4,7 @@ var World = function() {
 	this.ambientCoefficient = 0.2;
 
 	Object.defineProperty(this, 'objects', {enumerable: true, value: []});
+	Object.defineProperty(this, 'light', {enumerable: true, value: new Point(-320,-240,0)});
 };
 
 World.prototype.getFirstIntersection = function( eye, ray ) {
